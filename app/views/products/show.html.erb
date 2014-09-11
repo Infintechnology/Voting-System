@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @product.name %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @product.price %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @product.description %>
+</p>
+<p>
+<%= image_tag @product.image if @product.image? %>
+</p>
+<div>
+  <em>
+      <%= current_user.email %>
+    | <%= pluralize @product.reputation_for(:votes).to_i, "vote" %>
+  <% if current_user && !current_user.voted_for?(@product) %>
+    | <%= link_to image_tag("like.png", :size => "50x20"), vote_product_path(@product, type: "up"), method: "post" %>
+    | <%= link_to image_tag("unlike.png", :size => "50x20"), vote_product_path(@product, type: "down"), method: "post" %>
+  <% end %>
+  </em>
+</div>
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>
